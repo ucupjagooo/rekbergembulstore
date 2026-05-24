@@ -3,176 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gembul Store | Rekber System & Trading</title>
+    <title>Gembul x Own Store | Rekber System, FT & Isian Hub</title>
+    <!-- Tailwind CSS for modern layout -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for high-quality icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --primary: #3b82f6; --bg: #020617; }
+        :root { 
+            --primary: #3b82f6; 
+            --secondary: #8b5cf6;
+            --bg: #030712; 
+        }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
             background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.1) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
             color: #f8fafc;
             min-height: 100vh;
         }
         .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(16px);
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .page { display: none; animation: fadeIn 0.4s ease-out forwards; }
+        .glass-glow-blue {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+        }
+        .glass-glow-purple {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+        }
+        .page { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .page.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        input, textarea {
-            background: rgba(15, 23, 42, 0.8) !important;
+        input, textarea, select {
+            background: rgba(17, 24, 39, 0.9) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             color: white !important;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             border-color: #3b82f6 !important;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
             outline: none;
         }
 
         /* Container QRIS Portrait */
         .qris-container {
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             margin: 0 auto;
-            min-height: 460px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            border-radius: 2rem;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.25rem;
+            color: #0f172a;
         }
 
         .qris-image {
             width: 100%;
             height: auto;
-            max-height: 400px;
-            object-fit: contain;
             border-radius: 0.5rem;
+            object-fit: contain;
         }
 
         #scam-alert {
             display: none;
-            animation: slideUpIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        @keyframes slideUpIn {
-            from { transform: translate(-50%, 100%); opacity: 0; }
-            to { transform: translate(-50%, -50%); opacity: 1; }
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         
-        .ps-link-card {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        .copy-toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #10b981;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 99px;
-            font-weight: 800;
-            font-size: 12px;
-            text-transform: uppercase;
-            z-index: 1000;
-            display: none;
-            animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
         @keyframes bounceIn {
-            0% { opacity: 0; bottom: 0; }
-            100% { opacity: 1; bottom: 20px; }
+            0% { transform: translate(-50%, -40%) scale(0.9); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased pb-24">
 
-    <div id="copy-toast" class="copy-toast">Link Berhasil Disalin!</div>
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] bg-emerald-500 text-white font-bold px-6 py-3 rounded-full text-sm shadow-xl flex items-center gap-2 hidden transition-all duration-300">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-msg">Teks berhasil disalin!</span>
+    </div>
+
+    <!-- Alert Modal (Replaces unsafe alert) -->
+    <div id="alert-modal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="glass p-8 rounded-[2rem] max-w-md w-full border-red-500/30 text-center">
+            <div class="w-16 h-16 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle animate-pulse"></i>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2" id="alert-title">Pemberitahuan</h3>
+            <p class="text-slate-400 text-sm mb-6" id="alert-desc">Ada kesalahan dalam pengisian formulir Anda.</p>
+            <button onclick="closeAlertModal()" class="w-full py-4 bg-red-600 hover:bg-red-500 text-white font-black rounded-2xl transition uppercase text-sm tracking-widest">SAYA PAHAM</button>
+        </div>
+    </div>
 
     <!-- Anti-Scam Popup -->
     <div id="scam-alert" class="fixed top-1/2 left-1/2 z-[100] w-[90%] max-w-md">
         <div class="glass p-8 rounded-[2.5rem] border-red-500/50 shadow-[0_0_50px_rgba(239,68,68,0.3)] text-center">
             <div class="w-16 h-16 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500 text-2xl animate-pulse">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-shield-alt"></i>
             </div>
             <h3 class="text-2xl font-black text-white mb-2 uppercase italic tracking-tighter">Waspada Penipuan!</h3>
-            <p class="text-slate-400 text-sm mb-6">Pastikan hanya bertransaksi via WA resmi:</p>
+            <p class="text-slate-400 text-xs mb-6">Pastikan Anda hanya bertransaksi melalui no WhatsApp & Admin resmi Gembul x Own:</p>
             <div class="bg-slate-950/80 p-4 rounded-2xl border border-white/5 mb-6">
-                <p class="text-xl font-black text-red-500 tracking-wider">0853-5200-2602</p>
+                <p class="text-lg font-black text-red-500 tracking-wider">0853-5200-2602</p>
+                <p class="text-xs text-slate-500 mt-1">Selalu teliti nomor sebelum mengirim dana/item!</p>
             </div>
-            <button onclick="closeScamAlert()" class="w-full py-4 bg-red-600 hover:bg-red-500 text-white font-black rounded-2xl transition uppercase">SAYA MENGERTI</button>
+            <button onclick="closeScamAlert()" class="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl transition uppercase text-xs tracking-wider">SAYA MENGERTI & AMAN</button>
         </div>
     </div>
-    <div id="scam-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90] hidden"></div>
+    <div id="scam-overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[90] hidden"></div>
 
     <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 bg-slate-950/50 backdrop-blur-md border-b border-white/5">
+    <nav class="fixed top-0 w-full z-50 bg-slate-950/70 backdrop-blur-lg border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white">G</div>
-                <span class="font-extrabold text-xl tracking-tight uppercase">GEMBUL<span class="text-blue-500">STORE</span></span>
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg shadow-blue-500/30">G</div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-lg tracking-tight leading-none uppercase">GEMBUL<span class="text-blue-500">STORE</span></span>
+                    <span class="text-[9px] text-indigo-400 font-bold tracking-widest uppercase">X OWN COMMUNITY</span>
+                </div>
             </div>
-            <button onclick="navigateTo('home')" class="text-sm font-semibold text-slate-400 hover:text-white transition uppercase flex items-center gap-2">
-                <i class="fas fa-home"></i> Home
-            </button>
+            
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-6">
+                <button onclick="navigateTo('home')" class="text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2"><i class="fas fa-home"></i> Home</button>
+                <button onclick="navigateTo('rekber-page')" class="text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2"><i class="fas fa-handshake"></i> Rekber/MC</button>
+                <button onclick="navigateTo('ft-page')" class="text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2"><i class="fas fa-exchange-alt"></i> FT Generator</button>
+                <button onclick="navigateTo('rules-page')" class="text-sm font-semibold text-slate-300 hover:text-white transition flex items-center gap-2"><i class="fas fa-book"></i> Rules & Isian</button>
+            </div>
         </div>
     </nav>
 
-    <!-- HOME -->
-    <main id="home" class="page active pt-28 pb-20 px-4">
+    <!-- HOME SCREEN -->
+    <main id="home" class="page active pt-28 px-4">
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase italic tracking-tighter">Layanan <span class="text-blue-500">Premium</span></h2>
-                <p class="text-slate-400 text-sm uppercase tracking-[0.2em]">Pusat Rekber & Jual Beli Fish It</p>
-            </div>
-            <div class="space-y-4">
-                <div class="glass p-8 rounded-[2.5rem] cursor-pointer transition flex items-center gap-6 border-blue-500/20 hover:border-blue-500/50" onclick="navigateTo('rekber-page')">
-                    <div class="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500 text-2xl"><i class="fas fa-handshake"></i></div>
-                    <div>
-                        <h3 class="text-xl font-black uppercase tracking-tighter">Rekber MC Gembul</h3>
-                        <p class="text-slate-400 text-sm">Fee Rp 1.000 (Flat) • Aman & Terpercaya</p>
+            <!-- Hero Banner -->
+            <div class="glass glass-glow-blue rounded-[3rem] p-8 md:p-12 mb-8 relative overflow-hidden border-blue-500/20 text-center md:text-left">
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl"></div>
+                <div class="absolute -left-12 -top-12 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="space-y-4 max-w-lg">
+                        <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-[0.3em] px-4 py-2 rounded-full border border-blue-500/20 inline-block">PORTAL KOMUNITAS GEMBUL X OWN</span>
+                        <h1 class="text-4xl md:text-5xl font-black tracking-tighter leading-none italic uppercase">
+                            TEMPAT TRANSAKSI <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">AMAN & TERPERCAYA</span>
+                        </h1>
+                        <p class="text-slate-400 text-sm">
+                            Platform asisten praktis untuk mempermudah Rekber (MC), generate format FT (Lapak dagangan), serta kalkulasi fee otomatis khusus untuk grup komunitas Gembul.
+                        </p>
                     </div>
+                    <div class="w-40 h-40 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-[2.5rem] flex items-center justify-center text-white text-6xl shadow-2xl shadow-indigo-500/40 animate-pulse">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <h2 class="text-xs font-black uppercase text-slate-500 tracking-[0.25em] mb-6 ml-2 italic">Layanan Utama</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Card 1 -->
+                <div class="glass p-6 rounded-[2rem] border-blue-500/10 hover:border-blue-500/40 transition-all duration-300 cursor-pointer group" onclick="navigateTo('rekber-page')">
+                    <div class="w-12 h-12 bg-blue-500/15 rounded-2xl flex items-center justify-center text-blue-400 text-xl mb-4 group-hover:scale-110 transition-all"><i class="fas fa-wallet"></i></div>
+                    <h3 class="text-lg font-extrabold uppercase tracking-tight mb-2">Rekber & MC</h3>
+                    <p class="text-xs text-slate-400">Ajukan Rekber resmi melalui web, kirim bukti bayar, dan hubungi Admin Utama.</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs font-black text-blue-400 uppercase tracking-wider">Buka Rekber <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-all"></i></div>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass p-6 rounded-[2rem] border-indigo-500/10 hover:border-indigo-500/40 transition-all duration-300 cursor-pointer group" onclick="navigateTo('ft-page')">
+                    <div class="w-12 h-12 bg-indigo-500/15 rounded-2xl flex items-center justify-center text-indigo-400 text-xl mb-4 group-hover:scale-110 transition-all"><i class="fas fa-exchange-alt"></i></div>
+                    <h3 class="text-lg font-extrabold uppercase tracking-tight mb-2">FT Format Generator</h3>
+                    <p class="text-xs text-slate-400">Bikin format jualan WTB / WTS / WTT instan dan estetik dalam hitungan detik.</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs font-black text-indigo-400 uppercase tracking-wider">Bikin Lapak <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-all"></i></div>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass p-6 rounded-[2rem] border-purple-500/10 hover:border-purple-500/40 transition-all duration-300 cursor-pointer group" onclick="navigateTo('rules-page')">
+                    <div class="w-12 h-12 bg-purple-500/15 rounded-2xl flex items-center justify-center text-purple-400 text-xl mb-4 group-hover:scale-110 transition-all"><i class="fas fa-book-open"></i></div>
+                    <h3 class="text-lg font-extrabold uppercase tracking-tight mb-2">Isian, Rules & Fee</h3>
+                    <p class="text-xs text-slate-400">Lihat rincian rules grup, hitung fee transaksi, dan salin deskripsi rules lengkap.</p>
+                    <div class="mt-4 flex items-center gap-2 text-xs font-black text-purple-400 uppercase tracking-wider">Cek Info <i class="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-all"></i></div>
+                </div>
+            </div>
+
+            <!-- Fast Contact Board -->
+            <div class="glass p-6 rounded-[2rem] border-white/5">
+                <h4 class="text-sm font-black uppercase text-slate-400 mb-4 flex items-center gap-2"><i class="fas fa-user-shield text-blue-500"></i> Admin Utama Resmi (Anti Clone)</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <a href="https://wa.me/6285352002602" target="_blank" class="bg-slate-900/50 hover:bg-slate-900 border border-white/5 p-4 rounded-xl flex justify-between items-center transition">
+                        <div>
+                            <p class="font-bold text-sm text-white">GEMBUL (MAIN OWNER)</p>
+                            <p class="text-[10px] text-blue-400 font-extrabold tracking-widest uppercase">Owner Utama</p>
+                        </div>
+                        <span class="text-xs font-black bg-green-500/10 text-green-400 px-3 py-1 rounded-full border border-green-500/20"><i class="fab fa-whatsapp"></i> Hubungi</span>
+                    </a>
+                    <a href="https://wa.me/6285742652842" target="_blank" class="bg-slate-900/50 hover:bg-slate-900 border border-white/5 p-4 rounded-xl flex justify-between items-center transition">
+                        <div>
+                            <p class="font-bold text-sm text-white">DENOZ</p>
+                            <p class="text-[10px] text-indigo-400 font-extrabold tracking-widest uppercase">Admin Utama</p>
+                        </div>
+                        <span class="text-xs font-black bg-green-500/10 text-green-400 px-3 py-1 rounded-full border border-green-500/20"><i class="fab fa-whatsapp"></i> Hubungi</span>
+                    </a>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- REKBER PAGE -->
-    <div id="rekber-page" class="page pt-28 pb-20 px-4">
+    <div id="rekber-page" class="page pt-28 px-4">
         <div class="max-w-2xl mx-auto">
             <button onclick="navigateTo('home')" class="mb-6 text-slate-400 hover:text-white flex items-center gap-2 font-bold uppercase text-xs transition">
                 <i class="fas fa-arrow-left"></i> Kembali ke Menu
             </button>
             
-            <div class="glass p-6 md:p-10 rounded-[3rem] border-blue-500/20">
+            <div class="glass p-6 md:p-10 rounded-[3rem] border-blue-500/20 glass-glow-blue">
                 <div class="text-center mb-6">
-                    <h2 class="text-3xl font-black mb-2 uppercase italic tracking-tighter">Halaman Rekber</h2>
-                    <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-white/5 py-2 rounded-full px-4 inline-block">Merchant: UCUP TK STORE</p>
+                    <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-blue-500/20 inline-block mb-3">LAYANAN MIDMAN AMAN</span>
+                    <h2 class="text-3xl font-black mb-1 uppercase italic tracking-tighter">Halaman Rekber Gembul</h2>
+                    <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest bg-white/5 py-1.5 rounded-full px-4 inline-block mt-1">Merchant Resmi: UCUP TK STORE</p>
                 </div>
 
                 <!-- PS Section Interaktif -->
                 <div class="mb-8 space-y-3">
                     <div class="flex justify-between items-end ml-2">
-                        <h4 class="text-xs font-black uppercase text-slate-500 tracking-widest italic">Private Server</h4>
-                        <p id="ps-timer-label" class="text-[9px] font-bold text-blue-500 uppercase hidden animate-pulse">Pilih PS (3s)</p>
+                        <h4 class="text-xs font-black uppercase text-slate-500 tracking-widest italic">Private Server Roblox</h4>
+                        <p id="ps-timer-label" class="text-[9px] font-bold text-blue-500 uppercase hidden animate-pulse">Pilih Server (3s)</p>
                     </div>
                     
                     <div id="ps-container" class="grid grid-cols-1 gap-3 relative min-h-[70px]">
@@ -183,15 +261,15 @@
                         </button>
 
                         <!-- Pilihan Salin (Tersembunyi Awal) -->
-                        <div id="ps-selection" class="hidden absolute inset-0 grid grid-cols-2 gap-3 bg-slate-950/40 backdrop-blur-sm p-1 rounded-2xl">
+                        <div id="ps-selection" class="hidden absolute inset-0 grid grid-cols-2 gap-3 bg-slate-950/90 backdrop-blur-md p-1 rounded-2xl border border-blue-500/30">
                             <!-- Fish It -->
                             <button onclick="copyToClipboard('https://www.roblox.com/share?code=c63033f206ef444d8f20ab9aef4c5b4a&type=Server')" class="bg-blue-600 text-white rounded-xl flex flex-col items-center justify-center gap-1 hover:bg-blue-500 transition shadow-lg shadow-blue-600/20">
-                                <i class="fas fa-fish text-xs"></i>
+                                <i class="fas fa-fish text-sm"></i>
                                 <span class="text-[10px] font-black uppercase">Fish It</span>
                             </button>
-                            <!-- GAG -->
+                            <!-- GAG (Disabled) -->
                             <button class="bg-slate-800 text-slate-500 rounded-xl flex flex-col items-center justify-center gap-1 cursor-not-allowed border border-white/5">
-                                <i class="fas fa-ghost text-xs"></i>
+                                <i class="fas fa-ghost text-sm"></i>
                                 <span class="text-[10px] font-black uppercase tracking-tighter">GAG (Soon)</span>
                             </button>
                         </div>
@@ -199,41 +277,41 @@
                 </div>
 
                 <!-- Portrait QR Section -->
-                <div class="text-center mb-8 pt-4 border-t border-white/5">
-                    <div class="qris-container shadow-[0_30px_60px_rgba(59,130,246,0.25)]">
+                <div class="text-center mb-8 pt-6 border-t border-white/5">
+                    <div class="qris-container shadow-[0_30px_60px_rgba(59,130,246,0.15)] mb-6">
                         <div class="text-slate-900 font-extrabold text-[10px] uppercase mb-2 tracking-widest">Scan QRIS Untuk Bayar</div>
-                        <img id="qris-img" src="qr.jpeg" alt="QRIS" class="qris-image" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=UcupTKStore'">
+                        <img id="qris-img" src="qr.jpeg" alt="QRIS" class="qr.jpeg" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=UcupTKStore'">
                         <div class="mt-4 text-center">
                             <p class="text-slate-900 font-black text-sm">UCUP TK STORE</p>
                             <p class="text-slate-400 text-[8px] uppercase mt-1">Merchant Resmi Gembul Store</p>
                         </div>
                     </div>
                     
-                    <div class="mt-6 flex flex-wrap justify-center gap-4">
-                        <button onclick="downloadQR()" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase flex items-center gap-2 transition shadow-xl">
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button onclick="downloadQR()" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-2xl text-xs font-black uppercase flex items-center gap-2 transition shadow-xl border border-white/5">
                             <i class="fas fa-download"></i> Unduh QRIS
                         </button>
                         <div class="bg-blue-600/10 border border-blue-500/30 px-6 py-3 rounded-2xl">
-                            <p class="text-blue-400 font-black italic uppercase text-sm">Fee Rekber: Rp 1.000</p>
+                            <p class="text-blue-400 font-black italic uppercase text-xs flex items-center gap-1"><i class="fas fa-percentage"></i> Hitung Fee di Menu Isian</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Form Rekber -->
                 <div class="space-y-4 mt-10 border-t border-white/5 pt-8">
-                    <h4 class="text-center text-sm font-black uppercase text-blue-500 tracking-[0.2em] mb-4 italic">Form Laporan Transaksi</h4>
+                    <h4 class="text-center text-sm font-black uppercase text-blue-500 tracking-[0.2em] mb-4 italic">Form Laporan Transaksi Rekber</h4>
                     <div>
                         <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Detail Item / Akun</label>
-                        <textarea id="item-detail" rows="2" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: Akun Fish It + Rod Mitos"></textarea>
+                        <textarea id="item-detail" rows="2" class="w-full rounded-2xl p-4 text-sm" placeholder="-"></textarea>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Nominal Transaksi</label>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Nominal Transaksi (IDR)</label>
                             <input type="number" id="nominal" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: 50000">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Nama Pembeli</label>
-                            <input type="text" id="buyer-name" class="w-full rounded-2xl p-4 text-sm" placeholder="Nama Anda">
+                            <input type="text" id="buyer-name" class="w-full rounded-2xl p-4 text-sm" placeholder="Nama Anda / ID Discord">
                         </div>
                     </div>
                     <div>
@@ -247,7 +325,7 @@
                         </div>
                     </div>
 
-                    <button id="btn-submit" onclick="submitRekber()" class="w-full py-5 bg-blue-600 hover:bg-blue-500 rounded-2xl font-black text-white transition shadow-lg shadow-blue-600/30 uppercase tracking-[0.2em] mt-4">
+                    <button id="btn-submit" onclick="submitRekber()" class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-2xl font-black text-white transition shadow-lg shadow-blue-600/30 uppercase tracking-[0.2em] mt-4">
                         Kirim Laporan & Hubungi WA
                     </button>
                     <div id="status-msg" class="text-center text-xs mt-2 hidden font-bold"></div>
@@ -256,11 +334,285 @@
         </div>
     </div>
 
+    <!-- FT PAGE (Free Trade Generator) -->
+    <div id="ft-page" class="page pt-28 px-4">
+        <div class="max-w-2xl mx-auto">
+            <button onclick="navigateTo('home')" class="mb-6 text-slate-400 hover:text-white flex items-center gap-2 font-bold uppercase text-xs transition">
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu
+            </button>
+
+            <div class="glass p-6 md:p-10 rounded-[3rem] border-indigo-500/20 glass-glow-purple">
+                <div class="text-center mb-6">
+                    <span class="bg-indigo-500/10 text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-indigo-500/20 inline-block mb-3">FT FORMAT GENERATOR</span>
+                    <h2 class="text-3xl font-black mb-1 uppercase italic tracking-tighter">Bikin Lapak Dagangan</h2>
+                    <p class="text-xs text-slate-400">Buat teks lapak jualan/barter estetik dalam hitungan detik. Cepat, instan, dan siap dikirim ke grup!</p>
+                </div>
+
+                <!-- FT Form Inputs -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Jenis Lapak / Transaksi</label>
+                        <select id="ft-type" class="w-full rounded-2xl p-4 text-sm" onchange="generateFTPreview()">
+                            <option value="WTS">WTS (Want To Sell / Mau Jual)</option>
+                            <option value="WTB">WTB (Want To Buy / Mau Beli)</option>
+                            <option value="WTT">WTT (Want To Trade / Mau Barter)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Nama Barang / Akun / Item</label>
+                        <input type="text" id="ft-item" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: Akun Level Max 500k Fish / Rod Kraken" oninput="generateFTPreview()">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Harga / Budget</label>
+                            <input type="text" id="ft-price" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: Rp 45.000 / 300 Perak" oninput="generateFTPreview()">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Metode Pembayaran</label>
+                            <input type="text" id="ft-payment" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: Dana / Qris / Perak" oninput="generateFTPreview()">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Nomor WhatsApp Kamu</label>
+                        <input type="text" id="ft-wa" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: 6281234567890" oninput="generateFTPreview()">
+                    </div>
+
+                    <!-- Live Preview Card -->
+                    <div class="mt-6">
+                        <label class="block text-[10px] font-black uppercase text-slate-500 mb-2 ml-4 tracking-widest">Live Preview Teks Lapak</label>
+                        <div class="bg-slate-950 p-6 rounded-2xl border border-white/5 font-mono text-xs text-indigo-400 select-all overflow-x-auto whitespace-pre-wrap relative" id="ft-preview-box">
+                            <!-- Live text dynamically injected -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button onclick="copyFTText()" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 rounded-2xl font-black text-white transition flex items-center justify-center gap-2 uppercase text-xs tracking-wider">
+                            <i class="fas fa-copy"></i> Salin Format Lapak
+                        </button>
+                        <button onclick="shareFTToWA()" class="w-full py-4 bg-green-600 hover:bg-green-500 rounded-2xl font-black text-white transition flex items-center justify-center gap-2 uppercase text-xs tracking-wider">
+                            <i class="fab fa-whatsapp"></i> Share Ke Grup WA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RULES & ISIAN PAGE -->
+    <div id="rules-page" class="page pt-28 px-4">
+        <div class="max-w-3xl mx-auto">
+            <button onclick="navigateTo('home')" class="mb-6 text-slate-400 hover:text-white flex items-center gap-2 font-bold uppercase text-xs transition">
+                <i class="fas fa-arrow-left"></i> Kembali ke Menu
+            </button>
+
+            <!-- Rules, Isian, and Calculator Main Card -->
+            <div class="glass p-6 md:p-10 rounded-[3rem] border-purple-500/20 shadow-[0_0_40px_rgba(139,92,246,0.1)]">
+                <div class="text-center mb-8">
+                    <span class="bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-purple-500/20 inline-block mb-3">INFO ISIAN & COMMUNITY</span>
+                    <h2 class="text-3xl font-black mb-1 uppercase italic tracking-tighter">Community Rules & Fees</h2>
+                    <p class="text-xs text-slate-400">Aturan, daftar admin VVIP resmi, rincian biaya fee admin, dan alat penghitung fee otomatis.</p>
+                </div>
+
+                <!-- Tab Buttons -->
+                <div class="flex gap-2 p-1 bg-slate-950 rounded-2xl border border-white/5 mb-8">
+                    <button id="tab-btn-calculator" onclick="switchRulesTab('calculator')" class="flex-1 py-3 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-300 bg-purple-600 text-white">
+                        <i class="fas fa-calculator mr-1"></i> Fee Calculator
+                    </button>
+                    <button id="tab-btn-rules" onclick="switchRulesTab('rules')" class="flex-1 py-3 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-300 text-slate-400 hover:text-white">
+                        <i class="fas fa-gavel mr-1"></i> Aturan & Admin
+                    </button>
+                    <button id="tab-btn-feetable" onclick="switchRulesTab('feetable')" class="flex-1 py-3 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-300 text-slate-400 hover:text-white">
+                        <i class="fas fa-table mr-1"></i> Tabel Fee
+                    </button>
+                </div>
+
+                <!-- TAB 1: CALCULATOR -->
+                <div id="tab-content-calculator" class="tab-content space-y-6">
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2"><i class="fas fa-coins"></i> Kalkulator Fee Transaksi Gembul</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Pilih Jenis Mata Uang</label>
+                                <select id="calc-type" class="w-full rounded-2xl p-4 text-sm" onchange="calculateFee()">
+                                    <option value="idr">Rupiah (IDR / Rp)</option>
+                                    <option value="perak">Perak (Untuk Trade Roblox)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-500 mb-1 ml-4 tracking-widest">Masukkan Nominal Transaksi</label>
+                                <input type="number" id="calc-amount" class="w-full rounded-2xl p-4 text-sm" placeholder="Contoh: 50000" oninput="calculateFee()">
+                            </div>
+
+                            <!-- Real-time Result -->
+                            <div class="bg-slate-950 p-6 rounded-2xl border border-purple-500/20 text-center space-y-2 mt-4">
+                                <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Estimasi Total Biaya & Fee</p>
+                                <div class="grid grid-cols-2 gap-4 pt-2">
+                                    <div class="border-r border-white/5">
+                                        <p class="text-[9px] text-slate-500 font-extrabold uppercase">Fee Admin</p>
+                                        <p id="calc-fee" class="text-2xl font-black text-purple-400">Rp 0</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] text-slate-500 font-extrabold uppercase">Total Harus Bayar</p>
+                                        <p id="calc-total" class="text-2xl font-black text-green-400">Rp 0</p>
+                                    </div>
+                                </div>
+                                <p class="text-[9px] text-slate-500 pt-2 italic border-t border-white/5">*Admin buat room server: +500p perak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: RULES & ADMIN -->
+                <div id="tab-content-rules" class="tab-content space-y-6 hidden">
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                            <h3 class="text-sm font-black uppercase tracking-widest text-purple-400 flex items-center gap-2"><i class="fas fa-list-ol"></i> Tata Tertib Komunitas</h3>
+                            <button onclick="copyGroupPinText()" class="text-[10px] font-black uppercase bg-purple-600/20 text-purple-400 px-4 py-2 rounded-full border border-purple-500/30 hover:bg-purple-600/30 transition-all flex items-center gap-2">
+                                <i class="fas fa-copy"></i> Salin Rules (Pin WA)
+                            </button>
+                        </div>
+                        <ul class="space-y-3 text-xs text-slate-300">
+                            <li class="flex gap-2"><span class="text-purple-400 font-bold">1.</span> <span>**Wajib Gunakan Rekber/MC Resmi** - Dilarang keras transaksi direct tanpa perantara admin utama. Ketipu diluar grup? Admin tidak bertanggung jawab!</span></li>
+                            <li class="flex gap-2"><span class="text-purple-400 font-bold">2.</span> <span>**Dilarang Jualan File Ilegal/BKP/18+** - Sanksi KICK + BANNED permanen dari seluruh grup sirkel.</span></li>
+                            <li class="flex gap-2"><span class="text-purple-400 font-bold">3.</span> <span>**Dilarang Rusuh / Spam Chat** - Jaga kesopanan, dilarang kirim link sembarangan selain admin.</span></li>
+                            <li class="flex gap-2"><span class="text-purple-400 font-bold">4.</span> <span>**Gunakan Admin Utama untuk Nominal 15K+** - Demi keamanan ganda transaksi Anda.</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Official Admin List -->
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5 space-y-4">
+                        <h3 class="text-sm font-black uppercase tracking-widest text-purple-400 flex items-center gap-2"><i class="fas fa-shield-alt"></i> Daftar Owner & VVIP Resmi</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-slate-950 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                                <span>👑 [GEMBUL] - Admin Utama</span>
+                                <a href="https://wa.me/6285352002602" target="_blank" class="text-blue-400 hover:underline">Chat WA</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: FEE TABLES -->
+                <div id="tab-content-feetable" class="tab-content space-y-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- IDR Fee -->
+                        <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                            <h3 class="text-sm font-black uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2"><i class="fas fa-money-bill-wave"></i> Fee Rupiah (IDR)</h3>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>1k - 9.5k</span> <span class="font-bold text-green-400">1k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>10k - 19k</span> <span class="font-bold text-green-400">2k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>20k - 29k</span> <span class="font-bold text-green-400">3k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>30k - 39k</span> <span class="font-bold text-green-400">4k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>40k - 49k</span> <span class="font-bold text-green-400">5k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>50k - 59k</span> <span class="font-bold text-green-400">6k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>60k - 69k</span> <span class="font-bold text-green-400">7k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>70k - 79k</span> <span class="font-bold text-green-400">8k</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>80k - 89k</span> <span class="font-bold text-green-400">9k</span></div>
+                                <div class="flex justify-between py-1.5"><span>90k - 100k</span> <span class="font-bold text-green-400">10k</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Perak Fee -->
+                        <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                            <h3 class="text-sm font-black uppercase tracking-widest text-purple-400 mb-4 flex items-center gap-2"><i class="fas fa-coins"></i> Fee Perak</h3>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>50p - 100p</span> <span class="font-bold text-amber-400">50p</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>101p - 200p</span> <span class="font-bold text-amber-400">100p</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>201p - 300p</span> <span class="font-bold text-amber-400">150p</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>301p - 400p</span> <span class="font-bold text-amber-400">200p</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>401p - 500p</span> <span class="font-bold text-amber-400">250p</span></div>
+                                <div class="flex justify-between py-1.5 border-b border-white/5"><span>701p - 800p</span> <span class="font-bold text-amber-400">400p</span></div>
+                                <div class="flex justify-between py-1.5"><span>801p - 999p</span> <span class="font-bold text-amber-400">400p</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Bar -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950/80 backdrop-blur-md border-t border-white/5 py-3 px-6 flex justify-around items-center z-[80]">
+        <button onclick="navigateTo('home')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px] font-bold uppercase">Home</span>
+        </button>
+        <button onclick="navigateTo('rekber-page')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <i class="fas fa-handshake text-lg"></i>
+            <span class="text-[9px] font-bold uppercase">Rekber</span>
+        </button>
+        <button onclick="navigateTo('ft-page')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <i class="fas fa-exchange-alt text-lg"></i>
+            <span class="text-[9px] font-bold uppercase">FT</span>
+        </button>
+        <button onclick="navigateTo('rules-page')" class="flex flex-col items-center gap-1 text-slate-400 hover:text-white transition">
+            <i class="fas fa-book text-lg"></i>
+            <span class="text-[9px] font-bold uppercase">Rules</span>
+        </button>
+    </div>
+
     <script>
-        const phoneNumber = "6285352002602";
+        const phoneNumber = "6285352002602"; // Nomor Utama Gembul yang disesuaikan
         const webhookUrl = "https://discord.com/api/webhooks/1500365033568473179/xTdLbtBkIj3A_1DC3vuguL4Wp_y2CRhNuXPVVC5_bNJ4dO0_PI72wgacNTUefmB6ZD7V";
 
-        // Fitur Salin Link PS dengan timer 3 detik
+        // Show toast notifications
+        function showToast(message, type = "success") {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            
+            toastMsg.innerText = message;
+            toast.className = `fixed top-24 left-1/2 -translate-x-1/2 z-[999] text-white font-bold px-6 py-3 rounded-full text-sm shadow-xl flex items-center gap-2 transition-all duration-300 ${type === 'success' ? 'bg-emerald-500' : 'bg-red-500'}`;
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Custom modal alerts instead of alert()
+        function showAlertModal(title, desc) {
+            document.getElementById('alert-title').innerText = title;
+            document.getElementById('alert-desc').innerText = desc;
+            document.getElementById('alert-modal').classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        // Navigate page helper
+        function navigateTo(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+            }
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Anti-Scam Modal Initializer
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('scam-alert').style.display = 'block';
+                document.getElementById('scam-overlay').style.display = 'block';
+            }, 300);
+            generateFTPreview();
+        };
+
+        function closeScamAlert() {
+            document.getElementById('scam-alert').style.display = 'none';
+            document.getElementById('scam-overlay').style.display = 'none';
+        }
+
+        // Private Server selection with 3-second delay
         function togglePSSelection() {
             const selection = document.getElementById('ps-selection');
             const timerLabel = document.getElementById('ps-timer-label');
@@ -271,9 +623,10 @@
             setTimeout(() => {
                 selection.classList.add('hidden');
                 timerLabel.classList.add('hidden');
-            }, 3000); // 3 Detik pilihan muncul
+            }, 3000); 
         }
 
+        // Copy plain text to Clipboard
         function copyToClipboard(text) {
             const textArea = document.createElement("textarea");
             textArea.value = text;
@@ -282,54 +635,32 @@
             document.execCommand('copy');
             document.body.removeChild(textArea);
 
-            // Tampilkan toast
-            const toast = document.getElementById('copy-toast');
-            toast.style.display = 'block';
+            showToast("Link Server Berhasil Disalin!");
             
-            // Sembunyikan pilihan setelah menyalin
             document.getElementById('ps-selection').classList.add('hidden');
             document.getElementById('ps-timer-label').classList.add('hidden');
-
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 2000);
         }
 
+        // Download QR Code Image Helper
         function downloadQR() {
             const img = document.getElementById('qris-img');
             const link = document.createElement('a');
             link.href = img.src;
-            link.download = 'QRIS_GembulStore.jpg';
+            link.download = 'QRIS_Ucup_TK_Store.jpg';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            showToast("Mulai mengunduh berkas QRIS...");
         }
 
+        // Track QR upload changes
         document.getElementById('proof-image').addEventListener('change', function(e) {
             const fileName = e.target.files[0] ? e.target.files[0].name : "Klik untuk upload bukti bayar";
             document.getElementById('file-name').innerText = fileName;
             document.getElementById('file-name').classList.add('text-blue-400');
         });
 
-        window.onload = function() {
-            setTimeout(() => {
-                document.getElementById('scam-alert').style.display = 'block';
-                document.getElementById('scam-overlay').style.display = 'block';
-            }, 500);
-        };
-
-        function closeScamAlert() {
-            document.getElementById('scam-alert').style.display = 'none';
-            document.getElementById('scam-overlay').style.display = 'none';
-        }
-
-        function navigateTo(pageId) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
+        // Submit Rekber/MC Report to Discord & WhatsApp
         async function submitRekber() {
             const item = document.getElementById('item-detail').value;
             const nominal = document.getElementById('nominal').value;
@@ -339,14 +670,14 @@
             const statusMsg = document.getElementById('status-msg');
 
             if(!item || !nominal || !buyer || !fileInput.files[0]) {
-                alert("Lengkapi semua data dan bukti transfer!");
+                showAlertModal("Data Belum Lengkap", "Harap isi rincian item, nominal, nama pembeli dan lampirkan bukti pembayaran!");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerText = "MENGIRIM...";
+            btn.innerText = "MENGIRIM TRANSAKSI...";
             statusMsg.classList.remove('hidden');
-            statusMsg.innerText = "Memproses laporan...";
+            statusMsg.innerText = "Mengunggah bukti transaksi...";
 
             const now = new Date();
             const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -356,18 +687,18 @@
             reader.readAsDataURL(fileInput.files[0]);
             reader.onload = async function() {
                 const discordData = {
-                    content: "📢 **REKBER MASUK!**",
+                    content: "📢 **REKBER GEMBUL STORE BARU MASUK!**",
                     embeds: [{
-                        title: "🛍️ RINCIAN TRANSAKSI",
+                        title: "🛍️ DETAIL TRANSAKSI REKBER",
                         color: 3447003,
                         fields: [
-                            { name: "👤 Pembeli", value: buyer.toUpperCase(), inline: true },
-                            { name: "💰 Nominal", value: `Rp ${parseInt(nominal).toLocaleString('id-ID')}`, inline: true },
-                            { name: "📦 Item", value: item },
-                            { name: "⏰ Waktu", value: `${timeString} WIB`, inline: true },
+                            { name: "👤 Pembeli / Pengirim", value: buyer.toUpperCase(), inline: true },
+                            { name: "💰 Nominal Transaksi", value: `Rp ${parseInt(nominal).toLocaleString('id-ID')}`, inline: true },
+                            { name: "📦 Rincian Item", value: item },
+                            { name: "⏰ Waktu Transaksi", value: `${timeString} WIB`, inline: true },
                             { name: "📅 Tanggal", value: dateString, inline: true }
                         ],
-                        footer: { text: "Gembul Store System" },
+                        footer: { text: "Gembul x Own Automatic System" },
                         timestamp: new Date().toISOString()
                     }]
                 };
@@ -381,21 +712,141 @@
 
                     const formData = new FormData();
                     formData.append('file', fileInput.files[0]);
-                    formData.append('payload_json', JSON.stringify({ content: `📸 Bukti: ${buyer}` }));
+                    formData.append('payload_json', JSON.stringify({ content: `📸 Lampiran Bukti Pembayaran dari: ${buyer}` }));
                     await fetch(webhookUrl, { method: 'POST', body: formData });
 
-                    const waMsg = `Halo Admin Gembul,\n\nSaya sudah bayar REKBER.\n\n👤 Nama: ${buyer}\n💰 Nominal: Rp ${parseInt(nominal).toLocaleString('id-ID')}\n📦 Item: ${item}\n⏰ Jam: ${timeString}\n📅 Tanggal: ${dateString}\n\nMohon dicek!`;
+                    const waMsg = `Halo Admin Gembul,\n\nSaya telah mengirimkan formulir laporan REKBER melalui Web.\n\n👤 Nama Pengirim: ${buyer}\n💰 Nominal: Rp ${parseInt(nominal).toLocaleString('id-ID')}\n📦 Item: ${item}\n⏰ Waktu: ${timeString} WIB\n📅 Tanggal: ${dateString}\n\nMohon untuk segera dikonfirmasi dan diproses ya min! Terima kasih.`;
                     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(waMsg)}`, '_blank');
 
-                    statusMsg.innerText = "✅ TERKIRIM!";
+                    statusMsg.innerText = "✅ BERHASIL DIKIRIM!";
                     statusMsg.style.color = "#4ade80";
                     btn.disabled = false;
-                    btn.innerText = "KIRIM LAGI";
+                    btn.innerText = "KIRIM FORMULIR REKBER LAGI";
                 } catch (err) {
-                    statusMsg.innerText = "❌ Gagal kirim.";
+                    statusMsg.innerText = "❌ Terjadi kegagalan saat pengiriman.";
+                    statusMsg.style.color = "#ef4444";
                     btn.disabled = false;
+                    btn.innerText = "COBA KIRIM LAGI";
                 }
             };
+        }
+
+        // FT Format live Generator functions
+        function generateFTPreview() {
+            const type = document.getElementById('ft-type').value;
+            const item = document.getElementById('ft-item').value || '[ NAMA ITEM KAMU ]';
+            const price = document.getElementById('ft-price').value || '[ HARGA / BUDGET ]';
+            const payment = document.getElementById('ft-payment').value || '[ DANA/QRIS/PERAK ]';
+            const wa = document.getElementById('ft-wa').value || '6285352002602';
+            
+            let preview = `🛒 𝐅𝐎𝐑𝐌𝐀𝐓 𝐅𝐓 & 𝐋𝐀𝐏𝐀𝐊 𝐌𝐄𝐌𝐁𝐄𝐑 🛒\n\n•━━━━━•𖤌✠✯⋅ஜ۩۞۩ஜ⋅✯✠𖤌•━━━━━•\n\n#FTGEMBUL #LAPAKMEMBER\n📌 JENIS TRANSAKSI : ${type}\n📦 NAMA BARANG    : ${item}\n💰 HARGA/BUDGET   : ${price}\n💳 PAYMENT/SISTEM : ${payment}\n🔒 REKBER/MIDMAN  : Wajib Admin Gembul x Own!\n📞 HUBUNGI WA     : https://wa.me/${wa}\n\n•━━━━━•𖤌✠✯⋅ஜ۩۞۩ஜ⋅✯✠𖤌•━━━━━•\n\n🤝 𝐁𝐄𝐄 𝐒𝐌𝐀𝐑𝐓 𝐓𝐑𝐀𝐃𝐄𝐑 & 𝐒𝐀𝐅𝐄 𝐓𝐑𝐀𝐍𝐒𝐀𝐂𝐓𝐈𝐎𝐍`;
+            document.getElementById('ft-preview-box').innerText = preview;
+        }
+
+        function copyFTText() {
+            const previewText = document.getElementById('ft-preview-box').innerText;
+            const textArea = document.createElement("textarea");
+            textArea.value = previewText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast("Teks Lapak Berhasil Disalin!");
+        }
+
+        function shareFTToWA() {
+            const previewText = document.getElementById('ft-preview-box').innerText;
+            window.open(`https://wa.me/?text=${encodeURIComponent(previewText)}`, '_blank');
+        }
+
+        // Tab Switching for Rules & Isian Hub
+        function switchRulesTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+
+            const buttons = ['calculator', 'rules', 'feetable'];
+            buttons.forEach(btn => {
+                const el = document.getElementById(`tab-btn-${btn}`);
+                if (btn === tabName) {
+                    el.className = "flex-1 py-3 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-300 bg-purple-600 text-white";
+                } else {
+                    el.className = "flex-1 py-3 text-xs font-black uppercase tracking-wider rounded-xl transition-all duration-300 text-slate-400 hover:text-white";
+                }
+            });
+        }
+
+        // Live Fee Calculator logic based on Gembul official tables
+        function calculateFee() {
+            const type = document.getElementById('calc-type').value;
+            const amount = parseInt(document.getElementById('calc-amount').value) || 0;
+            let fee = 0;
+
+            if (type === 'idr') {
+                if (amount <= 0) {
+                    fee = 0;
+                } else if (amount <= 9500) {
+                    fee = 1000;
+                } else if (amount <= 19000) {
+                    fee = 2000;
+                } else if (amount <= 29000) {
+                    fee = 3000;
+                } else if (amount <= 39000) {
+                    fee = 4000;
+                } else if (amount <= 49000) {
+                    fee = 5000;
+                } else if (amount <= 59000) {
+                    fee = 6000;
+                } else if (amount <= 69000) {
+                    fee = 7000;
+                } else if (amount <= 79000) {
+                    fee = 8000;
+                } else if (amount <= 89000) {
+                    fee = 9000;
+                } else {
+                    fee = 10000;
+                }
+
+                document.getElementById('calc-fee').innerText = `Rp ${fee.toLocaleString('id-ID')}`;
+                document.getElementById('calc-total').innerText = `Rp ${(amount + fee).toLocaleString('id-ID')}`;
+            } else if (type === 'perak') {
+                if (amount <= 0) {
+                    fee = 0;
+                } else if (amount <= 100) {
+                    fee = 50;
+                } else if (amount <= 200) {
+                    fee = 100;
+                } else if (amount <= 300) {
+                    fee = 150;
+                } else if (amount <= 400) {
+                    fee = 200;
+                } else if (amount <= 500) {
+                    fee = 250;
+                } else if (amount <= 700) {
+                    fee = 300;
+                } else if (amount <= 800) {
+                    fee = 400;
+                } else {
+                    fee = 400; // max flat fee limit for silver based on rules list
+                }
+
+                document.getElementById('calc-fee').innerText = `${fee} Perak`;
+                document.getElementById('calc-total').innerText = `${amount + fee} Perak`;
+            }
+        }
+
+        // Copy entire customized WA Pin Rules & Admin table
+        function copyGroupPinText() {
+            const rulesPin = `𝐖𝐄𝐋𝐂𝐎𝐌𝐄 & 𝐒𝐄𝐋𝐀𝐌𝐀𝐓 𝐁𝐄𝐑𝐉𝐔𝐃𝐈*💫🚀\n\nADMIN UTAMA :\nwa.me/6285352002602 [GEMBUL]\nPT DENOZ:\nwa.me/+085792054423 [ RAY ]\n‼️sᴇʟᴀɪɴ ɴᴏ ᴅɪᴀᴛᴀs ᴄʟᴏɴᴇ‼️\n\n𝐀𝐋𝐋 𝐎𝐖𝐍 𝐕𝐕𝐈𝐏💫:\nhttps://wa.me/+6281919221745 [RAZE]\nhttps://wa.me/6283135934663 [DANZZ]\nwa.me/+6288289402000 [RYYANN]\nwa.me//6283190129606 (RAMDZZ)\nhttps://wa.me/+6289674059844 [KEN]\nwa.me/6282395550968 [ALAA]\nwa.me/6288247008978 [Reyy]\nwa.me/+6285928319270 [ RYYANN NEW ]\n\n•━━━━━•𖤌✠✯⋅ஜ۩۞۩ஜ⋅✯✠𖤌•━━━━━•\n\n✩ꜰᴇᴇ ᴀᴅᴍɪɴ 💫✩\n𝟣ᴋ-𝟫,𝟧ᴋ = 1k\n𝟣𝟢ᴋ-𝟣𝟫ᴋ = 2k\n𝟤𝟢ᴋ-𝟤𝟫ᴋ = 3k\n𝟥𝟢ᴋ-𝟥𝟫ᴋ = 4k\n𝟦𝟢ᴋ-𝟦𝟫ᴋ = 5k\n𝟧𝟢ᴋ-𝟧𝟫ᴋ = 6k\n𝟨𝟢ᴋ-𝟨𝟫ᴋ = 7k\n𝟩𝟢ᴋ-𝟩𝟫ᴋ = 8k\n𝟪𝟢ᴋ-𝟪𝟫ᴋ = 9k\n𝟫𝟢ᴋ-𝟣𝟢𝟢ᴋ = 10k\n!! ᴀᴅᴍɪɴ ʙɪᴋɪɴ ʀᴏᴏᴍ +𝟧𝟢𝟢ᴘ\n\n•━━━━━•𖤌✠✯⋅ஜ۩۞۩ஜ⋅✯✠𖤌•━━━━━•\n\n☆ꜰᴇᴇ ᴀᴅᴍɪɴ ᴘᴇʀᴀᴋ☆\n𝟧𝟢ᴘ-𝟣𝟢𝟢ᴘ = 𝟧𝟢ᴘ\n𝟣𝟢𝟣ᴘ-𝟤𝟢𝟢ᴘ = 𝟣𝟢𝟢ᴘ\n𝟤𝟢𝟣ᴘ-𝟥𝟢𝟢ᴘ = 𝟣𝟧𝟢ᴘ\n𝟥𝟢𝟣ᴘ-𝟦𝟢𝟢ᴘ = 𝟤𝟢𝟢ᴘ\n𝟦𝟢𝟣ᴘ-𝟧𝟢𝟢ᴘ = 𝟤𝟧𝟢ᴘ\n𝟩𝟢𝟣ᴘ-𝟪𝟢𝟢ᴘ = 𝟦𝟢𝟢ᴘ\n𝟪𝟢𝟣ᴘ-𝟫𝟫𝟫ᴘ = 𝟦𝟢𝟢ᴘ\n\nCARI LAWAN DI SINI ?? MC SINI LAHH, HARGAI ADMIN SUSAH PUSH MEMBER\nTRX 15+ USAHAKAN GUNAKAN ADMIN UTAMA\n\nʏᴀɴɢ ᴅɪ ʟᴀʀᴀɴɢ ᴅɪ ɢʙ ɪɴɪ :\n* ᴅɪʟᴀʀᴀɴɢ ᴊᴜᴀʟᴀɴ ꜰɪʟᴇ\n* ᴅɪʟᴀʀᴀɴɢ ᴊᴜᴀʟᴀɴ ʙᴋᴘ\n* ᴅɪʟᴀʀᴀɴɢ ʀᴜꜱᴜʜ\n* ᴅɪʟᴀʀᴀɴɢ ꜱᴘᴀᴍ\n* ᴅɪʟᴀʀᴀɴɢ ꜱʜᴀʀᴇ ʟɪɴᴋ ( ᴋᴇᴄᴜᴀʟɪ ᴀᴅᴍɪɴ )\n\n𝐁𝐄𝐄 𝐒𝐌𝐀𝐑𝐓 𝐁𝐔𝐘𝐄𝐑𝐊𝐔𝐔𝐔😍`;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = rulesPin;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showToast("Teks Rules (Pin) Berhasil Disalin!");
         }
     </script>
 </body>
